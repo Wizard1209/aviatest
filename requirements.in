@@ -1,0 +1,7 @@
+fastapi
+uvicorn[standart]
+pydantic
+httpx
+redis
+huey
+gevent

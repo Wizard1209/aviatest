@@ -1,0 +1,36 @@
+version: '3'
+
+services: 
+  redis:
+    image: bitnami/redis:6.2.11
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-data:/bitnami/redis/data
+
+  consumer:
+    build: .
+    command: huey_consumer.py tasks.huey -v -w 10 -k greenlet
+    depends_on:
+      - redis
+
+  api:
+    build: .
+    command: uvicorn api:core_app --host "0.0.0.0" --port "9000" --access-log
+    ports:
+      - 9000:9000
+    depends_on:
+      - redis
+
+  providers:
+    build: .
+    command: uvicorn providers:app --host "0.0.0.0" --port "80" --access-log
+    ports:
+      - 80:80
+    depends_on:
+      - redis
+
+volumes:
+  redis-data:
