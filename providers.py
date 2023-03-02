@@ -3,6 +3,7 @@ from enum import StrEnum
 from functools import cache
 
 from fastapi import FastAPI
+
 from models import Tickets
 
 app = FastAPI()
@@ -23,13 +24,13 @@ async def load_tickets_coro(path: JsonPath) -> Tickets:
     return load_tickets(path)
 
 
-@app.post("/provider_a/search")
+@app.post('/provider_a/search')
 async def provider_a() -> Tickets:
     res = await asyncio.gather(asyncio.sleep(30), load_tickets_coro(JsonPath.PROVIDER_A))
     return res[1]
 
 
-@app.post("/provider_b/search")
+@app.post('/provider_b/search')
 async def provider_b() -> Tickets:
     res = await asyncio.gather(asyncio.sleep(60), load_tickets_coro(JsonPath.PROVIDER_B))
     return res[1]

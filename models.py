@@ -73,8 +73,8 @@ class AirflowSearchResponse(BaseModel):
 
 
 class Status(StrEnum):
-    COMPLITED = "COMPLETED"
-    PENDING = "PENDING"
+    COMPLITED = 'COMPLETED'
+    PENDING = 'PENDING'
 
 
 class AirflowResultResponse(BaseModel):

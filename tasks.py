@@ -6,6 +6,7 @@ from typing import Callable, Iterable, Optional
 import httpx
 from gevent import monkey
 from huey import RedisHuey, crontab
+
 from models import Ticket, Tickets
 
 monkey.patch_all()
