@@ -12,13 +12,13 @@ from models import Ticket, Tickets
 monkey.patch_all()
 
 
-huey = RedisHuey(host='redis', compression=True, results=True)
+huey = RedisHuey(host='redis', results=True)
 
 
 # flexible filtering and sorting
 def filter_and_sort_tickets(tickets: Tickets,
-                            filters: Iterable[Callable] = [],
-                            sorts: Iterable[Callable] = [],
+                            filters: Optional[Iterable[Callable]] = None,
+                            sorts: Optional[Iterable[Callable]] = None,
                             **filter_kwargs: dict) -> Tickets:
     # to sort more efficiently, we make one function for filtering and one for sorting
     if filters:
